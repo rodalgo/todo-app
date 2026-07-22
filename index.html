@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Lista de Tareas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>📝 Mis Tareas</h1>
+    <p id="counter">0 tareas pendientes</p>
+
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="¿Qué necesitas hacer?">
+      <button id="addBtn">Agregar</button>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Todas</button>
+      <button class="filter-btn" data-filter="pending">Pendientes</button>
+      <button class="filter-btn" data-filter="done">Completadas</button>
+    </div>
+
+    <ul id="taskList">
+      <!-- Aquí van a aparecer las tareas, agregadas por JavaScript -->
+    </ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
