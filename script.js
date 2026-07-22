@@ -44,6 +44,13 @@ function render() {
     const span = document.createElement('span');
     span.textContent = task.text;
 
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+
+    const editBtn = document.createElement('span');
+    editBtn.textContent = '✎';
+    editBtn.className = 'edit-btn';
+
     const deleteBtn = document.createElement('span');
     deleteBtn.textContent = '✕';
     deleteBtn.className = 'delete-btn';
@@ -55,14 +62,57 @@ function render() {
       render();
     });
 
+    editBtn.addEventListener('click', function () {
+      // Reemplazamos el <span> por un <input> editable con el texto actual
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = task.text;
+      input.className = 'edit-input';
+
+      li.replaceChild(input, span);
+      input.focus();
+      input.select();
+
+      function saveEdit() {
+        const newText = input.value.trim();
+        if (newText !== '') {
+          const t = tasks.find(function (t) { return t.id === task.id; });
+          t.text = newText;
+          saveTasks();
+        }
+        render();
+      }
+
+      function cancelEdit() {
+        // Quitamos el listener de "blur" antes de redibujar: si no, al sacar
+        // el input del DOM se dispararía blur y guardaría igual el cambio
+        input.removeEventListener('blur', saveEdit);
+        render();
+      }
+
+      input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+          saveEdit();
+        }
+        if (event.key === 'Escape') {
+          cancelEdit();
+        }
+      });
+
+      input.addEventListener('blur', saveEdit);
+    });
+
     deleteBtn.addEventListener('click', function () {
       tasks = tasks.filter(function (t) { return t.id !== task.id; });
       saveTasks();
       render();
     });
 
+    actions.appendChild(editBtn);
+    actions.appendChild(deleteBtn);
+
     li.appendChild(span);
-    li.appendChild(deleteBtn);
+    li.appendChild(actions);
     taskList.appendChild(li);
   });
 
