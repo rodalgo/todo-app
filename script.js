@@ -4,6 +4,7 @@ const addBtn = document.getElementById('addBtn');
 const taskList = document.getElementById('taskList');
 const filterBtns = document.querySelectorAll('.filter-btn');
 const counter = document.getElementById('counter');
+const clearDoneBtn = document.getElementById('clearDoneBtn');
 
 const STORAGE_KEY = 'tasks';
 
@@ -143,6 +144,12 @@ taskInput.addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {
     addTask();
   }
+});
+
+clearDoneBtn.addEventListener('click', function () {
+  tasks = tasks.filter(function (t) { return !t.done; });
+  saveTasks();
+  render();
 });
 
 // 4. Al hacer clic en un botón de filtro, lo activamos y volvemos a dibujar la lista
